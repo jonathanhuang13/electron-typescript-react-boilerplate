@@ -3,20 +3,29 @@
  */
 
 const path = require('path');
-const {
-  dependencies: externals
-} = require('./app/package.json');
+const { dependencies: externals } = require('./app/package.json');
 
 module.exports = {
   module: {
-    loaders: [{
-      test: /\.tsx?$/,
-      loaders: ['react-hot-loader/webpack', 'ts-loader'],
-      exclude: /node_modules/
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }]
+    loaders: [
+      {
+        test: /\.tsx?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              plugins: ['react-hot-loader/babel']
+            }
+          },
+          'ts-loader'
+        ]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      }
+    ]
   },
 
   output: {
@@ -30,10 +39,7 @@ module.exports = {
   // https://webpack.github.io/docs/configuration.html#resolve
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.json'],
-    modules: [
-      path.join(__dirname, 'app'),
-      'node_modules',
-    ]
+    modules: [path.join(__dirname, 'app'), 'node_modules']
   },
 
   plugins: [],

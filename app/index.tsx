@@ -1,27 +1,42 @@
 import * as React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
+import * as ReactDOM from 'react-dom';
+import { AppContainer, hot } from 'react-hot-loader';
 import './app.global.scss';
+import { Provider } from 'react-redux';
+import { configureStore } from './store';
+import { createBrowserHistory } from 'history';
+import { Switch, Route } from 'react-router-dom';
+import Hello from './containers/Hello';
+import { ConnectedRouter } from 'react-router-redux';
 
-const { configureStore, history } = require('./store/configureStore');
-const store = configureStore();
+const history = createBrowserHistory();
+const store = configureStore(history);
 
-render(
+export const App = hot(module)(() => (
+  <Switch>
+    <Route path="/" component={Hello} />
+  </Switch>
+));
+
+ReactDOM.render(
   <AppContainer>
-    <Root store={store} history={history} />
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
+    </Provider>
   </AppContainer>,
   document.getElementById('root')
 );
 
-if ((module as any).hot) {
-  (module as any).hot.accept('./containers/Root', () => {
-    const NextRoot = require('./containers/Root').default;
-    render(
-      <AppContainer>
-        <NextRoot store={store} history={history} />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}
+// if ((module as any).hot) {
+//   (module as any).hot.accept('./containers/Hello', () => {
+//     const NextRoot = require('./containers/Root').default;
+//     ReactDOM.render(
+//       <AppContainer>
+//         <NextRoot store={store} history={history} />
+//       </AppContainer>,
+//       document.getElementById('root')
+//     );
+//   });
+// }

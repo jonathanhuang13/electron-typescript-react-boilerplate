@@ -1,14 +1,10 @@
-import { combineReducers, Reducer } from 'redux';
-import { routerReducer as routing } from 'react-router-redux';
-import counter, { TState as TCounterState } from './counter';
+import { combineReducers } from 'redux';
+import { enthusiasmReducer } from './enthusiasm';
+import { routerReducer } from 'react-router-redux';
 
-const rootReducer = combineReducers({
-  counter,
-  routing: routing as Reducer<any>
+// NOTE: current type definition of Reducer in 'react-router-redux' and 'redux-actions' module
+// doesn't go well with redux@4
+export const rootReducer = combineReducers<any>({
+  enthusiasm: enthusiasmReducer as any,
+  router: routerReducer as any
 });
-
-export interface IState {
-  counter: TCounterState;
-}
-
-export default rootReducer;
