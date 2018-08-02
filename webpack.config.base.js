@@ -7,7 +7,7 @@ const { dependencies: externals } = require('./app/package.json');
 
 module.exports = {
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.tsx?$/,
         use: [
