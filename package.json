@@ -4,37 +4,17 @@
   "description": "Electron application boilerplate based on TypeScript, React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
-    "build-main": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack/webpack.config.main.prod.js --progress --profile --colors",
-    "build-renderer": "cross-env NODE_ENV=production node ./node_modules/webpack/bin/webpack --config webpack/webpack.config.production.js --progress --profile --colors",
-    "build": "npm run build-main && npm run build-renderer",
+    "build-main": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.main.prod.js --progress --profile --colors",
+    "build-renderer": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.renderer.prod.js --progress --profile --colors",
+    "build": "yarn build-main && yarn build-renderer",
     "start": "cross-env NODE_ENV=production electron .",
-    "dev": "npm run dev-server -- --dev-main",
+    "dev": "yarn dev-server -- --dev-main",
     "dev-server": "cross-env NODE_ENV=development PORT=3001 node --max_old_space_size=2096 webpack/dev-server.js",
     "dev-main": "cross-env HOT=1 NODE_ENV=development electron ./main.dev",
-    "package": "npm run build && build --publish never",
-    "package-win": "npm run build && build --win --x64",
-    "package-linux": "npm run build && build --linux",
-    "package-all": "npm run build && build -mwl"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/test/preprocessor.js"
-    },
-    "testMatch": [
-      "**/?(*.)(spec|test).ts?(x)"
-    ]
+    "package": "yarn build && build --publish never",
+    "package-win": "yarn build && build --win --x64",
+    "package-linux": "yarn build && build --linux",
+    "package-all": "yarn build && build -mwl"
   },
   "build": {
     "productName": "ElectronReactTypescript",
@@ -81,27 +61,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/irath96/electron-react-typescript-boilerplate.git"
+    "url": "git+https://github.com/jonathanhuang13/electron-typescript-react-boilerplate.git"
   },
   "author": {
-    "name": "Alexander Rath",
-    "email": "irath96@gmail.com",
-    "url": "https://github.com/irath96"
+    "name": "Jonathan Huang"
   },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/irath96/electron-react-typescript-boilerplate/issues"
-  },
-  "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "react-router",
-    "flux",
-    "webpack",
-    "react-hot"
-  ],
-  "homepage": "https://github.com/irath96/electron-react-typescript-boilerplate#readme",
   "devDependencies": {
     "@types/enzyme": "^3.1.1",
     "@types/history": "^4.5.2",
