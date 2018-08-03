@@ -14,8 +14,8 @@ module.exports = merge(baseConfig, {
   entry: ['./app/index'],
 
   output: {
-    path: path.join(__dirname, 'dist'),
-    publicPath: './',
+    path: path.join(__dirname, '../dist'),
+    publicPath: '../',
     filename: 'bundle.js'
   },
 
@@ -89,7 +89,6 @@ module.exports = merge(baseConfig, {
     }),
 
     new HtmlWebpackPlugin({
-      template: 'app.html',
       inject: false
     })
   ],

@@ -2,6 +2,7 @@
  * Build config for electron 'Main Process' file
  */
 
+const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
@@ -13,7 +14,7 @@ module.exports = merge(baseConfig, {
 
   // 'main.js' in root
   output: {
-    path: __dirname,
+    path: path.join(__dirname, '..'),
     filename: './main.js'
   },
 

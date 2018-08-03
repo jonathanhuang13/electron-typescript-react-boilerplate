@@ -21,9 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    return Promise.all(
-      extensions.map(name => installer.default(installer[name], forceDownload))
-    );
+    return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload)));
   }
 }
 
@@ -34,7 +32,7 @@ app.on('ready', () => {
     height: 728
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();
@@ -235,9 +233,7 @@ function getTemplate() {
         {
           label: 'Documentation',
           click() {
-            shell.openExternal(
-              'https://github.com/atom/electron/tree/master/docs#readme'
-            );
+            shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
           }
         },
         {
@@ -324,9 +320,7 @@ function getDefaultTemplate() {
         {
           label: 'Documentation',
           click() {
-            shell.openExternal(
-              'https://github.com/atom/electron/tree/master/docs#readme'
-            );
+            shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
           }
         },
         {
