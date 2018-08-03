@@ -33,8 +33,12 @@ const server = app.listen(PORT, 'localhost', serverError => {
     return console.error(serverError);
   }
 
-  if (argv['start-hot']) {
-    spawn('npm', ['run', 'start-hot'], { shell: true, env: process.env, stdio: 'inherit' })
+  if (argv['dev-main']) {
+    spawn('npm', ['run', 'dev-main'], {
+      shell: true,
+      env: process.env,
+      stdio: 'inherit'
+    })
       .on('close', code => process.exit(code))
       .on('error', spawnError => console.error(spawnError));
   }
