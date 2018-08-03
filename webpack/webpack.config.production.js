@@ -11,7 +11,7 @@ const baseConfig = require('./webpack.config.base');
 module.exports = merge(baseConfig, {
   devtool: 'cheap-module-source-map',
 
-  entry: ['./app/index'],
+  entry: ['./src/index'],
 
   output: {
     path: path.join(__dirname, '../dist'),
