@@ -4,20 +4,25 @@
  * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
  */
 
+const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const baseConfig = require('./webpack.config.base');
+const { spawn } = require('child_process');
 
 const port = process.env.PORT || 3000;
 
 module.exports = merge(baseConfig, {
   mode: 'development',
 
+  target: 'electron-renderer',
+
   devtool: 'inline-source-map',
 
   entry: [
     'react-hot-loader/patch',
-    `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr&reload=true`,
+    `webpack-hot-middleware/client?path=http://localhost:${port}/`,
+    'webpack/hot/only-dev-server',
     './src/index'
   ],
 
@@ -146,12 +151,44 @@ module.exports = merge(baseConfig, {
 
   plugins: [
     // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin({ multistep: true }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
     })
   ],
 
-  target: 'electron-renderer'
+  devServer: {
+    port,
+    publicPath: `http://localhost:${port}/dist/`,
+    compress: true,
+    noInfo: true,
+    stats: 'errors-only',
+    inline: true,
+    lazy: false,
+    hot: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    contentBase: path.join(__dirname, '../dist'),
+    watchOptions: {
+      aggregateTimeout: 300,
+      ignored: /node_modules/,
+      poll: 100
+    },
+    historyApiFallback: {
+      verbose: true,
+      disableDotRule: true
+    },
+    before() {
+      if (process.env.START_MAIN) {
+        console.log('Starting Main Process...');
+        spawn('yarn', ['dev-main'], {
+          shell: true,
+          env: process.env,
+          stdio: 'inherit'
+        })
+          .on('close', code => process.exit(code))
+          .on('error', spawnError => console.error(spawnError));
+      }
+    }
+  }
 });

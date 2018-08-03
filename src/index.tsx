@@ -27,15 +27,3 @@ ReactDOM.render(
   </AppContainer>,
   document.getElementById('root')
 );
-
-// if ((module as any).hot) {
-//   (module as any).hot.accept('./containers/Hello', () => {
-//     const NextRoot = require('./containers/Root').default;
-//     ReactDOM.render(
-//       <AppContainer>
-//         <NextRoot store={store} history={history} />
-//       </AppContainer>,
-//       document.getElementById('root')
-//     );
-//   });
-// }
