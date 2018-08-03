@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { AppContainer, hot } from 'react-hot-loader';
-import './app.global.scss';
 import { Provider } from 'react-redux';
 import { configureStore } from './store';
 import { createBrowserHistory } from 'history';
